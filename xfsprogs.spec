@@ -1,5 +1,5 @@
 %define	name	xfsprogs
-%define	version	2.8.18
+%define	version	2.8.20
 %define	release	%mkrel 1
 
 %define	lib_name_orig	libxfs
@@ -10,7 +10,7 @@ Summary:	Utilities for managing the XFS filesystem
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
+Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 License:	GPL
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
