@@ -1,5 +1,5 @@
 %define	name	xfsprogs
-%define	version	2.8.20
+%define	version	2.8.21
 %define	release	%mkrel 1
 
 %define	lib_name_orig	libxfs
