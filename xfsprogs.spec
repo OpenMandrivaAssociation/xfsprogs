@@ -1,6 +1,6 @@
 %define	name	xfsprogs
-%define	version	2.8.21
-%define	release	%mkrel 2
+%define	version	2.9.3
+%define	release	%mkrel 1
 
 %define	lib_name_orig	libxfs
 %define	lib_major	1
@@ -10,7 +10,7 @@ Summary:	Utilities for managing the XFS filesystem
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
+Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
 License:	GPL
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -115,6 +115,9 @@ rm -rf %{buildroot}
 %{_sbindir}/xfs_ncheck
 %{_sbindir}/xfs_quota
 %{_sbindir}/xfs_rtcp
+%{_sbindir}/xfs_mdrestore
+%{_sbindir}/xfs_metadump
+
 /sbin/fsck.xfs
 /sbin/mkfs.xfs
 /sbin/xfs_repair
