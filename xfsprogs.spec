@@ -18,7 +18,6 @@ BuildRequires:	libext2fs-devel
 BuildRequires:	libreadline-devel
 BuildRequires:	libtermcap-devel
 BuildRequires:	libtool
-Prereq:		/sbin/ldconfig
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 
