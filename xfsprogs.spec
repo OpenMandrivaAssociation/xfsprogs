@@ -1,16 +1,14 @@
-%define	name	xfsprogs
-%define	version	2.9.3
-%define	release	%mkrel 1
-
 %define	lib_name_orig	libxfs
 %define	lib_major	1
 %define	lib_name	%mklibname xfs %{lib_major}
+%define	lib_name_devel	%mklibname xfs -d
+%define	lib_name_static_devel	%mklibname xfs -d -s
 
+Name:		xfsprogs
+Version:	2.9.4
+Release:	%mkrel 1
 Summary:	Utilities for managing the XFS filesystem
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.bz2
+Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 License:	GPL
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -44,32 +42,47 @@ Provides:	%{lib_name_orig} = %{version}-%{release}
 This package contains the library needed to run programs dynamically
 linked with %{lib_name_orig}.
 
-%package -n	%{lib_name}-devel
-Summary:	XFS filesystem-specific static libraries and headers
+%package -n	%{lib_name_devel}
+Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	xfs-devel = %{version}-%{release}
-Obsoletes:	xfs-devel
+Obsoletes:	xfs-devel < %{version}-%{release}
+Obsoletes:      %{lib_name}-devel < %{version}-%{release}
 
-
-%description -n	%{lib_name}-devel
-%{lib_name}-devel contains the libraries and header files needed to
+%description -n	%{lib_name_devel}
+%{lib_name_devel} contains the libraries and header files needed to
 develop XFS filesystem-specific programs.
 
-You should install %{lib_name}-devel if you want to develop XFS
-filesystem-specific programs, If you install %{lib_name}-devel, you'll
+You should install %{lib_name_devel} if you want to develop XFS
+filesystem-specific programs, If you install %{lib_name_devel}, you'll
+also want to install xfsprogs.
+
+%package -n	%{lib_name_static_devel}
+Summary:	XFS filesystem-specific static libraries
+Group:		Development/C
+Requires:	%{lib_name_devel} = %{version}
+Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
+Provides:	xfs-static-devel = %{version}-%{release}
+
+%description -n	%{lib_name_static_devel}
+%{lib_name_devel} contains the static libraries needed to
+develop XFS filesystem-specific programs.
+
+You should install %{lib_name_static_devel} if you want to develop XFS
+filesystem-specific programs, If you install %{lib_name_static_devel}, you'll
 also want to install xfsprogs.
 
 %prep
 %setup -q
 
 # make it lib64 aware, better make a patch?
-perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure
+perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
+%{__autoconf}
 
 %build
-aclocal && autoconf
-%configure2_5x \
+%{configure2_5x} \
 		--libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
@@ -80,21 +93,22 @@ aclocal && autoconf
 		--enable-termcap=yes \
 		--enable-shared=yes \
 		--enable-shared-uuid=yes
-%make DEBUG=-DNDEBUG OPTIMIZER="${RPM_OPT_FLAGS}"
+%{make} DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 
 # nuke files already packaged as %doc
-rm -rf %{buildroot}%{_datadir}/doc/xfsprogs/
+rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %find_lang %{name}
 
 %clean
 rm -rf %{buildroot}
 
 %post -n %{lib_name} -p /sbin/ldconfig
+
 %postun -n %{lib_name} -p /sbin/ldconfig
 
 %files -f %{name}.lang
@@ -127,15 +141,18 @@ rm -rf %{buildroot}
 %doc README
 /%{_lib}/*.so.*
 
-%files -n %{lib_name}-devel
+%files -n %{lib_name_devel}
 %defattr(-,root,root)
 %doc doc/PORTING README
 /%{_lib}/*.so
-/%{_lib}/*a
+/%{_lib}/*.la
 %{_libdir}/*so
-%{_libdir}/*a
+%{_libdir}/*.la
 %{_includedir}/xfs
 %{_includedir}/disk
 %{_mandir}/man3/*
 
-
+%files -n %{lib_name_static_devel}
+%defattr(-,root,root)
+/%{_lib}/*.a
+%{_libdir}/*.a
