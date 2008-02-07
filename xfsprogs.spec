@@ -6,7 +6,7 @@
 
 Name:		xfsprogs
 Version:	2.9.5
-Release:	%mkrel 1
+Release:	%mkrel 2
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 License:	GPLv2 and LGPLv2
@@ -48,6 +48,7 @@ Group:		Development/C
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	xfs-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	xfs-devel < %{version}-%{release}
 Obsoletes:      %{lib_name}-devel < %{version}-%{release}
 
