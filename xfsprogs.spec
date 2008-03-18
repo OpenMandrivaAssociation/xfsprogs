@@ -6,15 +6,13 @@
 
 Name:		xfsprogs
 Version:	2.9.6
-Release:	%manbo_mkrel 1
+Release:	%manbo_mkrel 2
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 License:	GPLv2 and LGPLv2
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libext2fs-devel
-BuildRequires:	libreadline-devel
-BuildRequires:	libtermcap-devel
 BuildRequires:	libtool
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
@@ -89,9 +87,7 @@ perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
 		--sbindir=/sbin \
 		--bindir=/usr/sbin \
 		--enable-gettext=yes \
-		--enable-readline=yes \
 		--enable-editline=no \
-		--enable-termcap=yes \
 		--enable-shared=yes \
 		--enable-shared-uuid=yes
 %{make} DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
