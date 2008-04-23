@@ -5,8 +5,8 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	2.9.6
-Release:	%manbo_mkrel 2
+Version:	2.9.8
+Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
 License:	GPLv2 and LGPLv2
