@@ -12,6 +12,7 @@ Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.t
 # Enable lazy count by default in mkfs.xfs, it improves performance
 # This needs Linux kernel >= 2.6.23
 Patch0:		xfsprogs-2.9.8-enable-lazy-count.patch
+Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 License:	GPLv2 and LGPLv2
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -79,6 +80,7 @@ also want to install xfsprogs.
 %prep
 %setup -q
 %patch0 -p1 -b .enable-lazy-count
+%patch1 -p1 -b .underlinking
 
 # make it lib64 aware, better make a patch?
 perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
