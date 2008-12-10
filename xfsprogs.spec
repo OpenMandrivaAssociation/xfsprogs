@@ -5,7 +5,7 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	2.10.1
+Version:	2.10.2
 Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
@@ -94,8 +94,7 @@ perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
 		--bindir=/usr/sbin \
 		--enable-gettext=yes \
 		--enable-editline=no \
-		--enable-shared=yes \
-		--enable-shared-uuid=yes
+		--enable-shared=yes
 %{make} DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
