@@ -6,13 +6,14 @@
 
 Name:		xfsprogs
 Version:	2.10.2
-Release:	%manbo_mkrel 1
+Release:	%manbo_mkrel 2
 Summary:	Utilities for managing the XFS filesystem
-Source0:	ftp://oss.sgi.com/projects/xfs/download/cmd_tars/%{name}_%{version}-1.tar.gz
+Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}_%{version}-1.tar.gz
 # Enable lazy count by default in mkfs.xfs, it improves performance
 # This needs Linux kernel >= 2.6.23
 Patch0:		xfsprogs-2.9.8-enable-lazy-count.patch
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
+Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 License:	GPLv2 and LGPLv2
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -81,13 +82,17 @@ also want to install xfsprogs.
 %setup -q
 %patch0 -p1 -b .enable-lazy-count
 %patch1 -p1 -b .underlinking
+%patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 # make it lib64 aware, better make a patch?
 perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
 %{__autoconf}
 
 %build
-%{configure2_5x} \
+export DEBUG="-DNDEBUG"
+export OPTIMIZER="%{optflags}"
+
+%configure2_5x \
 		--libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
@@ -95,7 +100,8 @@ perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
 		--enable-gettext=yes \
 		--enable-editline=no \
 		--enable-shared=yes
-%{make} DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
+
+make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
 rm -rf %{buildroot}
