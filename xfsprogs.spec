@@ -5,10 +5,10 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	2.10.2
-Release:	%manbo_mkrel 2
+Version:	3.0.0
+Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
-Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}_%{version}-1.tar.gz
+Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
 # Enable lazy count by default in mkfs.xfs, it improves performance
 # This needs Linux kernel >= 2.6.23
 Patch0:		xfsprogs-2.9.8-enable-lazy-count.patch
@@ -21,6 +21,7 @@ BuildRequires:	libext2fs-devel
 BuildRequires:	libtool
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
+Conflicts:	xfsdump < 3.0.0
 
 %description
 A set of commands to use the XFS filesystem, including mkfs.xfs.
@@ -142,6 +143,8 @@ rm -rf %{buildroot}
 %{_sbindir}/xfs_rtcp
 %{_sbindir}/xfs_mdrestore
 %{_sbindir}/xfs_metadump
+%{_sbindir}/xfs_estimate
+%{_sbindir}/xfs_fsr
 
 /sbin/fsck.xfs
 /sbin/mkfs.xfs
@@ -161,7 +164,6 @@ rm -rf %{buildroot}
 %{_libdir}/*so
 %{_libdir}/*.la
 %{_includedir}/xfs
-%{_includedir}/disk
 %{_mandir}/man3/*
 
 %files -n %{lib_name_static_devel}
