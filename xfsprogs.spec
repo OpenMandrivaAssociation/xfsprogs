@@ -5,7 +5,7 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	3.0.0
+Version:	3.0.1
 Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
@@ -84,10 +84,6 @@ also want to install xfsprogs.
 %patch0 -p1 -b .enable-lazy-count
 %patch1 -p1 -b .underlinking
 %patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-
-# make it lib64 aware, better make a patch?
-perl -pi -e "/(libuuid|pkg_s?lib_dir)=/ and s|/lib\b|/%{_lib}|;" configure.in
-%{__autoconf}
 
 %build
 export DEBUG="-DNDEBUG"
