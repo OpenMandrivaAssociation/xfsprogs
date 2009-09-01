@@ -5,7 +5,7 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	3.0.1
+Version:	3.0.3
 Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
