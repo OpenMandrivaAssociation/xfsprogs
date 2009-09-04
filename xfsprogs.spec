@@ -19,6 +19,7 @@ Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libext2fs-devel
 BuildRequires:	libtool
+BuildRequires:	libuuid-devel
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
