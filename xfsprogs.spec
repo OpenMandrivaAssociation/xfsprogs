@@ -6,7 +6,7 @@
 
 Name:		xfsprogs
 Version:	3.0.3
-Release:	%manbo_mkrel 1
+Release:	%manbo_mkrel 2
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
 # Enable lazy count by default in mkfs.xfs, it improves performance
@@ -51,6 +51,8 @@ linked with %{lib_name_orig}.
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
 Requires:	%{lib_name} = %{version}
+# For uuid/uuid.h included in /usr/include/xfs/linux.h
+Requires:	ext2fs-devel
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	xfs-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
