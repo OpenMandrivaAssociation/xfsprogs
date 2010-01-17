@@ -5,13 +5,10 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	3.0.3
-Release:	%manbo_mkrel 3
+Version:	3.1.0
+Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
-# Enable lazy count by default in mkfs.xfs, it improves performance
-# This needs Linux kernel >= 2.6.23
-Patch0:		xfsprogs-2.9.8-enable-lazy-count.patch
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 License:	GPLv2 and LGPLv2
@@ -84,7 +81,7 @@ also want to install xfsprogs.
 
 %prep
 %setup -q
-%patch0 -p1 -b .enable-lazy-count
+#patch0 -p1 -b .enable-lazy-count
 %patch1 -p1 -b .underlinking
 %patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
@@ -126,24 +123,24 @@ rm -rf %{buildroot}
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc doc/CHANGES.gz doc/COPYING doc/CREDITS README
-%{_sbindir}/xfs_admin
-%{_sbindir}/xfs_bmap
-%{_sbindir}/xfs_check
-%{_sbindir}/xfs_copy
-%{_sbindir}/xfs_db
-%{_sbindir}/xfs_freeze
-%{_sbindir}/xfs_growfs
-%{_sbindir}/xfs_info
-%{_sbindir}/xfs_io
-%{_sbindir}/xfs_logprint
-%{_sbindir}/xfs_mkfile
-%{_sbindir}/xfs_ncheck
-%{_sbindir}/xfs_quota
-%{_sbindir}/xfs_rtcp
-%{_sbindir}/xfs_mdrestore
-%{_sbindir}/xfs_metadump
-%{_sbindir}/xfs_estimate
-%{_sbindir}/xfs_fsr
+/sbin/xfs_admin
+/sbin/xfs_bmap
+/sbin/xfs_check
+/sbin/xfs_copy
+/sbin/xfs_db
+/sbin/xfs_freeze
+/sbin/xfs_growfs
+/sbin/xfs_info
+/sbin/xfs_io
+/sbin/xfs_logprint
+/sbin/xfs_mkfile
+/sbin/xfs_ncheck
+/sbin/xfs_quota
+/sbin/xfs_rtcp
+/sbin/xfs_mdrestore
+/sbin/xfs_metadump
+/sbin/xfs_estimate
+/sbin/xfs_fsr
 
 /sbin/fsck.xfs
 /sbin/mkfs.xfs
@@ -157,15 +154,12 @@ rm -rf %{buildroot}
 
 %files -n %{lib_name_devel}
 %defattr(-,root,root)
-%doc doc/PORTING README
+%doc README
 /%{_lib}/*.so
 /%{_lib}/*.la
-%{_libdir}/*so
-%{_libdir}/*.la
 %{_includedir}/xfs
 %{_mandir}/man3/*
 
 %files -n %{lib_name_static_devel}
 %defattr(-,root,root)
 /%{_lib}/*.a
-%{_libdir}/*.a
