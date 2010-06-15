@@ -5,7 +5,7 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	3.1.1
+Version:	3.1.2
 Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
@@ -81,7 +81,6 @@ also want to install xfsprogs.
 
 %prep
 %setup -q
-#patch0 -p1 -b .enable-lazy-count
 %patch1 -p1 -b .underlinking
 %patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
