@@ -1,3 +1,5 @@
+%define _disable_ld_no_undefined 1
+
 %define	lib_name_orig	libxfs
 %define	lib_major	1
 %define	lib_name	%mklibname xfs %{lib_major}
@@ -5,7 +7,7 @@
 %define	lib_name_static_devel	%mklibname xfs -d -s
 
 Name:		xfsprogs
-Version:	3.1.2
+Version:	3.1.4
 Release:	%manbo_mkrel 1
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
@@ -13,13 +15,13 @@ Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 License:	GPLv2 and LGPLv2
 Group:		System/Kernel and hardware
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libext2fs-devel
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 A set of commands to use the XFS filesystem, including mkfs.xfs.
