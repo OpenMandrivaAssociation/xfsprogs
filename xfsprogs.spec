@@ -1,10 +1,15 @@
 %define _disable_ld_no_undefined 1
 
-%define	lib_name_orig	libxfs
 %define	major	1
-%define	libname	%mklibname xfs %{major}
-%define	devname	%mklibname xfs -d
-%define	statname %mklibname xfs -d -s
+
+%define	oldlib	%mklibname xfs %{major}
+%define	olddev	%mklibname xfs -d
+%define	olstat	%mklibname xfs -d -s
+
+%define	libname	%mklibname handle %{major}
+%define	devname	%mklibname handle -d
+%define	statname %mklibname handle -d -s
+
 
 Name:		xfsprogs
 Version:	3.1.5
@@ -37,12 +42,13 @@ for complete details.  This implementation is on-disk compatible
 with the IRIX version of XFS.
 
 %package -n	%{libname}
-Summary:	Main library for %{lib_name_orig}
+Summary:	Main library for xfsprogs
 Group:		System/Libraries
+%rename		%{oldlib}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
-linked with %{lib_name_orig}.
+linked with libhandle.
 
 %package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
@@ -50,7 +56,8 @@ Group:		Development/C
 Requires:	%{libname} = %{version}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
-Provides:	xfs-devel = %{version}-%{release}
+%rename		%{olddev}
+Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
 %{devname} contains the libraries and header files needed to
@@ -64,7 +71,8 @@ also want to install xfsprogs.
 Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
 Requires:	%{devname} = %{version}
-Provides:	xfs-static-devel = %{version}-%{release}
+%rename		%{oldstat}
+Provides:	%{name}-static-devel = %{version}-%{release}
 
 %description -n	%{statname}
 %{devname} contains the static libraries needed to
