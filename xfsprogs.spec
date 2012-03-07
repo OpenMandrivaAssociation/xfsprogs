@@ -20,9 +20,9 @@ Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 License:	GPLv2
 Group:		System/Kernel and hardware
-BuildRequires:	libext2fs-devel
+BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	libtool
-BuildRequires:	libuuid-devel
+BuildRequires:	pkgconfig(uuid)
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
