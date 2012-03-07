@@ -39,7 +39,6 @@ with the IRIX version of XFS.
 %package -n	%{libname}
 Summary:	Main library for %{lib_name_orig}
 Group:		System/Libraries
-Provides:	%{lib_name_orig} = %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
@@ -51,11 +50,7 @@ Group:		Development/C
 Requires:	%{libname} = %{version}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	xfs-devel = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	xfs-devel < %{version}-%{release}
-Obsoletes:      %{libname}-devel < %{version}-%{release}
 
 %description -n	%{devname}
 %{devname} contains the libraries and header files needed to
