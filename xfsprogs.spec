@@ -18,7 +18,7 @@ Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
-License:	GPLv2 and LGPLv2
+License:	GPLv2
 Group:		System/Kernel and hardware
 BuildRequires:	libext2fs-devel
 BuildRequires:	libtool
@@ -44,6 +44,7 @@ with the IRIX version of XFS.
 %package -n	%{libname}
 Summary:	Main library for xfsprogs
 Group:		System/Libraries
+License:	LGPLv2.1+
 %rename		%{oldlib}
 
 %description -n	%{libname}
@@ -53,6 +54,7 @@ linked with libhandle.
 %package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
+License:	LGPLv2.1+
 Requires:	%{libname} = %{EVRD}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
@@ -70,6 +72,7 @@ also want to install xfsprogs.
 %package -n	%{statname}
 Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
+License:	LGPLv2.1+
 Requires:	%{devname} = %{version}
 %rename		%{oldstat}
 Provides:	%{name}-static-devel = %{EVRD}
@@ -110,7 +113,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc doc/CHANGES.gz doc/COPYING doc/CREDITS README
+%doc doc/CHANGES.gz doc/CREDITS README
 /sbin/xfs_admin
 /sbin/xfs_bmap
 /sbin/xfs_check
