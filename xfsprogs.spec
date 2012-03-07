@@ -1,14 +1,14 @@
 %define _disable_ld_no_undefined 1
 
 %define	lib_name_orig	libxfs
-%define	lib_major	1
-%define	lib_name	%mklibname xfs %{lib_major}
-%define	lib_name_devel	%mklibname xfs -d
-%define	lib_name_static_devel	%mklibname xfs -d -s
+%define	major	1
+%define	libname	%mklibname xfs %{major}
+%define	devname	%mklibname xfs -d
+%define	statname %mklibname xfs -d -s
 
 Name:		xfsprogs
 Version:	3.1.5
-Release:	%manbo_mkrel 1
+Release:	2
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
@@ -21,7 +21,6 @@ BuildRequires:	libuuid-devel
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 A set of commands to use the XFS filesystem, including mkfs.xfs.
@@ -37,48 +36,48 @@ Refer to the documentation at http://oss.sgi.com/projects/xfs/
 for complete details.  This implementation is on-disk compatible
 with the IRIX version of XFS.
 
-%package -n	%{lib_name}
+%package -n	%{libname}
 Summary:	Main library for %{lib_name_orig}
 Group:		System/Libraries
 Provides:	%{lib_name_orig} = %{version}-%{release}
 
-%description -n	%{lib_name}
+%description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{lib_name_orig}.
 
-%package -n	%{lib_name_devel}
+%package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
-Requires:	%{lib_name} = %{version}
+Requires:	%{libname} = %{version}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	xfs-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	xfs-devel < %{version}-%{release}
-Obsoletes:      %{lib_name}-devel < %{version}-%{release}
+Obsoletes:      %{libname}-devel < %{version}-%{release}
 
-%description -n	%{lib_name_devel}
-%{lib_name_devel} contains the libraries and header files needed to
+%description -n	%{devname}
+%{devname} contains the libraries and header files needed to
 develop XFS filesystem-specific programs.
 
-You should install %{lib_name_devel} if you want to develop XFS
-filesystem-specific programs, If you install %{lib_name_devel}, you'll
+You should install %{devname} if you want to develop XFS
+filesystem-specific programs, If you install %{devname}, you'll
 also want to install xfsprogs.
 
-%package -n	%{lib_name_static_devel}
+%package -n	%{statname}
 Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
-Requires:	%{lib_name_devel} = %{version}
+Requires:	%{devname} = %{version}
 Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
 Provides:	xfs-static-devel = %{version}-%{release}
 
-%description -n	%{lib_name_static_devel}
-%{lib_name_devel} contains the static libraries needed to
+%description -n	%{statname}
+%{devname} contains the static libraries needed to
 develop XFS filesystem-specific programs.
 
-You should install %{lib_name_static_devel} if you want to develop XFS
-filesystem-specific programs, If you install %{lib_name_static_devel}, you'll
+You should install %{statname} if you want to develop XFS
+filesystem-specific programs, If you install %{statname}, you'll
 also want to install xfsprogs.
 
 %prep
@@ -90,8 +89,7 @@ also want to install xfsprogs.
 export DEBUG="-DNDEBUG"
 export OPTIMIZER="%{optflags}"
 
-%configure2_5x \
-		--libdir=/%{_lib} \
+%configure2_5x	--libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
 		--bindir=/usr/sbin \
@@ -102,7 +100,6 @@ export OPTIMIZER="%{optflags}"
 make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
-rm -rf %{buildroot}
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 
@@ -110,19 +107,7 @@ make install-dev DIST_ROOT=%{buildroot}/
 rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{lib_name} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{lib_name} -p /sbin/ldconfig
-%endif
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc doc/CHANGES.gz doc/COPYING doc/CREDITS README
 /sbin/xfs_admin
 /sbin/xfs_bmap
@@ -148,19 +133,16 @@ rm -rf %{buildroot}
 /sbin/xfs_repair
 %{_mandir}/man[85]/*
 
-%files -n %{lib_name}
-%defattr(-,root,root)
+%files -n %{libname}
 %doc README
 /%{_lib}/*.so.*
 
-%files -n %{lib_name_devel}
-%defattr(-,root,root)
+%files -n %{devname}
 %doc README
 /%{_lib}/*.so
 /%{_lib}/*.la
 %{_includedir}/xfs
 %{_mandir}/man3/*
 
-%files -n %{lib_name_static_devel}
-%defattr(-,root,root)
+%files -n %{statname}
 /%{_lib}/*.a
