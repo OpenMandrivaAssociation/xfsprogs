@@ -4,7 +4,7 @@
 
 %define	oldlib	%mklibname xfs %{major}
 %define	olddev	%mklibname xfs -d
-%define	olstat	%mklibname xfs -d -s
+%define	oldstat	%mklibname xfs -d -s
 
 %define	libname	%mklibname handle %{major}
 %define	devname	%mklibname handle -d
@@ -152,4 +152,4 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %{_mandir}/man3/*
 
 %files -n %{statname}
-/%{_lib}/*.a
+/%{_lib}/libhandle.a
