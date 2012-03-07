@@ -108,6 +108,8 @@ make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 
+chmod +x %{buildroot}/%{_lib}/libhandle.so.%{major}*
+
 # nuke files already packaged as %doc
 rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %find_lang %{name}
@@ -140,12 +142,12 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 
 %files -n %{libname}
 %doc README
-/%{_lib}/*.so.*
+/%{_lib}/libhandle.so.%{major}*
 
 %files -n %{devname}
 %doc README
-/%{_lib}/*.so
-/%{_lib}/*.la
+/%{_lib}/libhandle.so
+/%{_lib}/libhandle.la
 %{_includedir}/xfs
 %{_mandir}/man3/*
 
