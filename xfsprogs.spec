@@ -53,11 +53,11 @@ linked with libhandle.
 %package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{EVRD}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
 %rename		%{olddev}
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{name}-devel = %{EVRD}
 
 %description -n	%{devname}
 %{devname} contains the libraries and header files needed to
@@ -72,7 +72,7 @@ Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
 Requires:	%{devname} = %{version}
 %rename		%{oldstat}
-Provides:	%{name}-static-devel = %{version}-%{release}
+Provides:	%{name}-static-devel = %{EVRD}
 
 %description -n	%{statname}
 %{devname} contains the static libraries needed to
