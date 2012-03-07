@@ -64,7 +64,6 @@ also want to install xfsprogs.
 Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
 Requires:	%{devname} = %{version}
-Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
 Provides:	xfs-static-devel = %{version}-%{release}
 
 %description -n	%{statname}
