@@ -10,24 +10,49 @@
 %define	devname	%mklibname handle -d
 %define	statname %mklibname handle -d -s
 
+%bcond_without	uclibc
 
 Name:		xfsprogs
 Version:	3.1.8
-Release:	1
+Release:	2
 Summary:	Utilities for managing the XFS filesystem
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
+Patch3:		xfsprogs-3.1.8-drop-aio-check.patch
+Patch4:		xfsprogs-use-posix-signal-api.patch
+Patch5:		xfsprogs-3.1.8-link-against-lintl.patch
 License:	GPLv2
 Group:		System/Kernel and hardware
 BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	libtool
 BuildRequires:	pkgconfig(uuid)
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-9
+%endif
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
 
 %description
+A set of commands to use the XFS filesystem, including mkfs.xfs.
+
+XFS is a high performance journaling filesystem which originated
+on the SGI IRIX platform.  It is completely multi-threaded, can
+support large files and large filesystems, extended attributes,
+variable block sizes, is extent based, and makes extensive use of
+Btrees (directories, extents, free space) to aid both performance
+and scalability.
+
+Refer to the documentation at http://oss.sgi.com/projects/xfs/
+for complete details.  This implementation is on-disk compatible
+with the IRIX version of XFS.
+
+%package -n	uclibc-%{name}
+Summary:	Utilities for managing the XFS filesystem (uClibc build)
+Group:		System/Kernel and hardware
+
+%description -n	uclibc-%{name}
 A set of commands to use the XFS filesystem, including mkfs.xfs.
 
 XFS is a high performance journaling filesystem which originated
@@ -51,11 +76,23 @@ License:	LGPLv2.1+
 This package contains the library needed to run programs dynamically
 linked with libhandle.
 
+%package -n	uclibc-%{libname}
+Summary:	Main library for xfsprogs (uClibc build)
+Group:		System/Libraries
+License:	LGPLv2.1+
+
+%description -n	uclibc-%{libname}
+This package contains the library needed to run programs dynamically
+linked with libhandle.
+
 %package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
 License:	LGPLv2.1+
 Requires:	%{libname} = %{EVRD}
+%if %{with uclibc}
+Requires:	uclibc-%{libname} = %{version}
+%endif
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
 %rename		%{olddev}
@@ -89,8 +126,38 @@ also want to install xfsprogs.
 %setup -q
 %patch1 -p1 -b .underlinking
 %patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+%patch3 -p1 -b .noaio~
+%patch4 -p1 -b .posix_sig~
+%patch5 -p1 -b .lintl~
+
+%if %{with uclibc}
+mkdir .uclibc
+pushd .uclibc
+cp -a ../* .
+popd
+%endif
 
 %build
+%if %{with uclibc}
+pushd .uclibc
+export DEBUG="-DNDEBUG"
+
+%configure2_5x	CC=%{uclibc_cc} \
+		OPTIMIZER="%{uclibc_cflags}" \
+		--libdir=%{uclibc_root}/%{_lib} \
+		--prefix=%{uclibc_root} \
+		--exec-prefix=%{uclibc_root} \
+		--libexecdir=%{uclibc_root}%{_libdir} \
+		--sbindir=%{uclibc_root}/sbin \
+		--bindir=%{uclibc_root}/usr/sbin \
+		--enable-gettext=yes \
+		--enable-editline=no \
+		--enable-shared=yes
+
+%make DEBUG=-DNDEBUG
+popd
+%endif
+
 export DEBUG="-DNDEBUG"
 export OPTIMIZER="%{optflags}"
 
@@ -105,6 +172,15 @@ export OPTIMIZER="%{optflags}"
 make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
+%if %{with uclibc}
+make -C .uclibc install DIST_ROOT=%{buildroot}
+make -C .uclibc install-dev DIST_ROOT=%{buildroot}
+install -d %{buildroot}%{uclibc_root}%{_libdir}
+rm %{buildroot}%{uclibc_root}/%{_lib}/libhandle.{la,so}
+ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libhandle.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libhandle.so
+mv %{buildroot}%{uclibc_root}/%{_lib}/libhandle.a %{buildroot}%{uclibc_root}%{_libdir}/libhandle.a
+%endif
+
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 
@@ -140,15 +216,52 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 /sbin/xfs_repair
 %{_mandir}/man[85]/*
 
+%if %{with uclibc}
+%files -n uclibc-%{name}
+%{uclibc_root}/sbin/xfs_admin
+%{uclibc_root}/sbin/xfs_bmap
+%{uclibc_root}/sbin/xfs_check
+%{uclibc_root}/sbin/xfs_copy
+%{uclibc_root}/sbin/xfs_db
+%{uclibc_root}/sbin/xfs_freeze
+%{uclibc_root}/sbin/xfs_growfs
+%{uclibc_root}/sbin/xfs_info
+%{uclibc_root}/sbin/xfs_io
+%{uclibc_root}/sbin/xfs_logprint
+%{uclibc_root}/sbin/xfs_mkfile
+%{uclibc_root}/sbin/xfs_ncheck
+%{uclibc_root}/sbin/xfs_quota
+%{uclibc_root}/sbin/xfs_rtcp
+%{uclibc_root}/sbin/xfs_mdrestore
+%{uclibc_root}/sbin/xfs_metadump
+%{uclibc_root}/sbin/xfs_estimate
+%{uclibc_root}/sbin/xfs_fsr
+
+%{uclibc_root}/sbin/fsck.xfs
+%{uclibc_root}/sbin/mkfs.xfs
+%{uclibc_root}/sbin/xfs_repair
+%endif
+
 %files -n %{libname}
 %doc README
 /%{_lib}/libhandle.so.%{major}*
 
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%{uclibc_root}/%{_lib}/libhandle.so.%{major}*
+%endif
+
 %files -n %{devname}
 %doc README
 /%{_lib}/libhandle.so
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libhandle.so
+%endif
 %{_includedir}/xfs
 %{_mandir}/man3/*
 
 %files -n %{statname}
 /%{_lib}/libhandle.a
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libhandle.a
+%endif
