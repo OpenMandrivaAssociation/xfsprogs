@@ -176,14 +176,19 @@ make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 make -C .uclibc install DIST_ROOT=%{buildroot}
 make -C .uclibc install-dev DIST_ROOT=%{buildroot}
 install -d %{buildroot}%{uclibc_root}%{_libdir}
-rm %{buildroot}%{uclibc_root}/%{_lib}/libhandle.{la,so}
+rm %{buildroot}%{uclibc_root}/%{_lib}/libhandle.so
 ln -sr %{buildroot}/%{uclibc_root}/%{_lib}/libhandle.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libhandle.so
 mv %{buildroot}%{uclibc_root}/%{_lib}/libhandle.a %{buildroot}%{uclibc_root}%{_libdir}/libhandle.a
+chmod +x %{buildroot}/%{uclibc_root}/%{_lib}/libhandle.so.%{major}*
 %endif
 
 make install DIST_ROOT=%{buildroot}/
 make install-dev DIST_ROOT=%{buildroot}/
 
+install -d %{buildroot}%{_libdir}
+rm %{buildroot}/%{_lib}/libhandle.so
+ln -sr %{buildroot}/%{_lib}/libhandle.so.%{major}.* %{buildroot}%{_libdir}/libhandle.so
+mv %{buildroot}/%{_lib}/libhandle.a %{buildroot}%{_libdir}/libhandle.a
 chmod +x %{buildroot}/%{_lib}/libhandle.so.%{major}*
 
 # nuke files already packaged as %doc
@@ -253,7 +258,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 
 %files -n %{devname}
 %doc README
-/%{_lib}/libhandle.so
+%{_libdir}/libhandle.so
 %if %{with uclibc}
 %{uclibc_root}%{_libdir}/libhandle.so
 %endif
@@ -261,7 +266,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %{_mandir}/man3/*
 
 %files -n %{statname}
-/%{_lib}/libhandle.a
+%{_libdir}/libhandle.a
 %if %{with uclibc}
 %{uclibc_root}%{_libdir}/libhandle.a
 %endif
