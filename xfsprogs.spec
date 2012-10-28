@@ -21,7 +21,6 @@ Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 Patch3:		xfsprogs-3.1.8-drop-aio-check.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
-Patch5:		xfsprogs-3.1.8-link-against-lintl.patch
 License:	GPLv2
 Group:		System/Kernel and hardware
 BuildRequires:	pkgconfig(ext2fs)
@@ -128,7 +127,6 @@ also want to install xfsprogs.
 %patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 %patch3 -p1 -b .noaio~
 %patch4 -p1 -b .posix_sig~
-%patch5 -p1 -b .lintl~
 
 %if %{with uclibc}
 mkdir .uclibc
