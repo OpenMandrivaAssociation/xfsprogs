@@ -141,6 +141,7 @@ pushd .uclibc
 export DEBUG="-DNDEBUG"
 
 %uclibc_configure \
+		OPTIMIZER="%{uclibc_cflags}" \
 		--libdir=%{uclibc_root}/%{_lib} \
 		--prefix=%{uclibc_root} \
 		--exec-prefix=%{uclibc_root} \
