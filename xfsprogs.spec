@@ -153,7 +153,7 @@ export DEBUG="-DNDEBUG"
 		--enable-shared=yes \
 		--enable-readline=yes
 
-%make DEBUG=-DNDEBUG
+%make DEBUG=-DNDEBUG || make DEBUG=-DNDEBUG 
 popd
 %endif
 
