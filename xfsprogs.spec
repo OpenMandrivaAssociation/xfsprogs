@@ -142,14 +142,12 @@ popd
 pushd .uclibc
 export DEBUG="-DNDEBUG"
 
-%configure2_5x	CC=%{uclibc_cc} \
-		OPTIMIZER="%{uclibc_cflags}" \
+%uclibc_configure \
 		--libdir=%{uclibc_root}/%{_lib} \
 		--prefix=%{uclibc_root} \
 		--exec-prefix=%{uclibc_root} \
 		--libexecdir=%{uclibc_root}%{_libdir} \
 		--sbindir=%{uclibc_root}/sbin \
-		--bindir=%{uclibc_root}/usr/sbin \
 		--enable-gettext=yes \
 		--enable-editline=no \
 		--enable-shared=yes
