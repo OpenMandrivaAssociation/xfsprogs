@@ -26,8 +26,9 @@ Group:		System/Kernel and hardware
 BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	libtool
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	readline-devel
 %if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-9
+BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
 URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
@@ -149,7 +150,8 @@ export DEBUG="-DNDEBUG"
 		--sbindir=%{uclibc_root}/sbin \
 		--enable-gettext=yes \
 		--enable-editline=no \
-		--enable-shared=yes
+		--enable-shared=yes \
+		--enable-readline=yes
 
 %make DEBUG=-DNDEBUG
 popd
@@ -164,7 +166,8 @@ export OPTIMIZER="%{optflags}"
 		--bindir=/usr/sbin \
 		--enable-gettext=yes \
 		--enable-editline=no \
-		--enable-shared=yes
+		--enable-shared=yes \
+		--enable-readine=yes
 
 make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
