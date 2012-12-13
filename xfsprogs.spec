@@ -12,25 +12,26 @@
 
 %bcond_without	uclibc
 
-Name:		xfsprogs
-Version:	3.1.8
-Release:	2
 Summary:	Utilities for managing the XFS filesystem
-Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars//%{name}-%{version}.tar.gz
+Name:		xfsprogs
+Version:	3.1.9
+Release:	1
+License:	GPLv2
+Group:		System/Kernel and hardware
+URL:		http://oss.sgi.com/projects/xfs/
+Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 Patch3:		xfsprogs-3.1.8-drop-aio-check.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
-License:	GPLv2
-Group:		System/Kernel and hardware
-BuildRequires:	pkgconfig(ext2fs)
+
 BuildRequires:	libtool
-BuildRequires:	pkgconfig(uuid)
 BuildRequires:	readline-devel
+BuildRequires:	pkgconfig(ext2fs)
+BuildRequires:	pkgconfig(uuid)
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
-URL:		http://oss.sgi.com/projects/xfs/
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
 

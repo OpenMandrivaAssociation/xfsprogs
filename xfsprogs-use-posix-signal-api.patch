@@ -1,0 +1,47 @@
+Signed-off-by: Kamal Dasu <kdasu.kdev@xxxxxxxxx>
+---
+ copy/xfs_copy.c |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/copy/xfs_copy.c b/copy/xfs_copy.c
+index c01e0b9..800f4fd 100644
+--- a/copy/xfs_copy.c
++++ b/copy/xfs_copy.c
+@@ -71,6 +71,16 @@ xfs_off_t write_log_header(int fd, wbuf *w, xfs_mount_t *mp);
+ #define PRE	0x08		/* append strerror string */
+ #define LAST	0x10		/* final message we print */
+ 
++static void
++signal_maskfunc(int sig, int how) 
++{
++	sigset_t set;
++
++	sigemptyset(&set);
++	sigaddset(&set, sig);
++	sigprocmask(how, &set, NULL);
++}
++
+ void
+ do_message(int flags, int code, const char *fmt, ...)
+ {
+@@ -478,9 +488,9 @@ write_wbuf(void)
+ 		if (target[i].state != INACTIVE)
+ 			pthread_mutex_unlock(&targ[i].wait);	/* wake up */
+ 
+-	sigrelse(SIGCHLD);
++	signal_maskfunc(SIGCHLD, SIG_UNBLOCK);
+ 	pthread_mutex_lock(&mainwait);
+-	sighold(SIGCHLD);
++	signal_maskfunc(SIGCHLD, SIG_BLOCK);
+ }
+ 
+ 
+@@ -847,7 +857,7 @@ main(int argc, char **argv)
+ 	/* set up sigchild signal handler */
+ 
+ 	signal(SIGCHLD, handler);
+-	sighold(SIGCHLD);
++	signal_maskfunc(SIGCHLD, SIG_BLOCK);
+ 
+ 	/* make children */
+ 
