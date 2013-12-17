@@ -23,6 +23,7 @@ Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}-alpha2.tar.g
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch3:		xfsprogs-3.1.10-drop-aio-check.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
+Patch5:		xfsprogs-aarch64.patch
 
 BuildRequires:	libtool
 BuildRequires:	readline-devel
