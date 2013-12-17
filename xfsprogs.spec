@@ -14,13 +14,14 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	3.2.0
-Release:	1
+Version:	3.1.10
+Release:	8
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
-Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}-alpha2.tar.gz
+Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
+Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
 Patch3:		xfsprogs-3.1.10-drop-aio-check.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
 Patch5:		xfsprogs-aarch64.patch
@@ -124,8 +125,12 @@ filesystem-specific programs, If you install %{statname}, you'll
 also want to install xfsprogs.
 
 %prep
-%setup -qn %{name}-%{version}-alpha2
-%apply_patches
+%setup -q
+%patch1 -p1 -b .underlinking
+%patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+%patch3 -p1 -b .noaio~
+%patch4 -p1 -b .posix_sig~
+%patch5 -p1 -b .aarch64
 
 %if %{with uclibc}
 mkdir .uclibc
@@ -147,6 +152,7 @@ export DEBUG="-DNDEBUG"
 		--libexecdir=%{uclibc_root}%{_libdir} \
 		--sbindir=%{uclibc_root}/sbin \
 		--enable-gettext=yes \
+		--enable-static \
 		--enable-editline=no \
 		--enable-shared=yes \
 		--enable-readline=yes
@@ -161,9 +167,9 @@ export OPTIMIZER="%{optflags}"
 %configure2_5x	--libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
-		--enable-static \
 		--bindir=/usr/sbin \
 		--enable-gettext=yes \
+		--enable-static \
 		--enable-editline=no \
 		--enable-shared=yes \
 		--enable-readine=yes
