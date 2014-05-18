@@ -14,17 +14,15 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	3.1.10
-Release:	8
+Version:	3.2.0
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
-Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
-Patch3:		xfsprogs-3.1.10-drop-aio-check.patch
+Patch2:		xfsprogs-3.2.0-uclibc.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
-Patch5:		xfsprogs-aarch64.patch
 
 BuildRequires:	libtool
 BuildRequires:	readline-devel
@@ -126,11 +124,9 @@ also want to install xfsprogs.
 
 %prep
 %setup -q
-%patch1 -p1 -b .underlinking
-%patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-%patch3 -p1 -b .noaio~
-%patch4 -p1 -b .posix_sig~
-%patch5 -p1 -b .aarch64
+%apply_patches
+aclocal -I m4
+autoconf
 
 %if %{with uclibc}
 mkdir .uclibc
