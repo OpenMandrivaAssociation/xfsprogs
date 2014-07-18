@@ -200,7 +200,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %doc doc/CHANGES.gz doc/CREDITS README
 /sbin/xfs_admin
 /sbin/xfs_bmap
-/sbin/xfs_check
+# /sbin/xfs_check
 /sbin/xfs_copy
 /sbin/xfs_db
 /sbin/xfs_freeze
@@ -226,7 +226,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %files -n uclibc-%{name}
 %{uclibc_root}/sbin/xfs_admin
 %{uclibc_root}/sbin/xfs_bmap
-%{uclibc_root}/sbin/xfs_check
+# %{uclibc_root}/sbin/xfs_check
 %{uclibc_root}/sbin/xfs_copy
 %{uclibc_root}/sbin/xfs_db
 %{uclibc_root}/sbin/xfs_freeze
