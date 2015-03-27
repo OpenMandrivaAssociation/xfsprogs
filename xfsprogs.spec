@@ -14,12 +14,12 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	3.2.1
-Release:	2
+Version:	3.2.2
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
-Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
+Source0:	ftp://oss.sgi.com:21/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
 Patch2:		xfsprogs-3.2.0-uclibc.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
