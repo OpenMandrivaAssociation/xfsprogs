@@ -37,7 +37,7 @@ diff -p -up ./libxlog/Makefile.underlinking ./libxlog/Makefile
 +++ xfsprogs-3.2.0/io/Makefile	2014-05-18 22:42:55.159478905 +0200
 @@ -13,8 +13,8 @@ CFILES = init.c \
  	mmap.c open.c parent.c pread.c prealloc.c pwrite.c seek.c shutdown.c \
- 	truncate.c
+ 	sync.c truncate.c
  
 -LLDLIBS = $(LIBXCMD) $(LIBHANDLE)
 -LTDEPENDENCIES = $(LIBXCMD) $(LIBHANDLE)
