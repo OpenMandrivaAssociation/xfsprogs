@@ -14,15 +14,14 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	3.1.10
-Release:	6
+Version:	3.2.2
+Release:	0.1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
 Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
-Patch2:		xfsprogs-2.10.2-format_not_a_string_literal_and_no_format_arguments.diff
-Patch3:		xfsprogs-3.1.10-drop-aio-check.patch
+Patch2:		xfsprogs-3.2.0-uclibc.patch
 Patch4:		xfsprogs-use-posix-signal-api.patch
 
 BuildRequires:	libtool
@@ -125,10 +124,9 @@ also want to install xfsprogs.
 
 %prep
 %setup -q
-%patch1 -p1 -b .underlinking
-%patch2 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-%patch3 -p1 -b .noaio~
-%patch4 -p1 -b .posix_sig~
+%apply_patches
+aclocal -I m4
+autoconf
 
 %if %{with uclibc}
 mkdir .uclibc
@@ -150,6 +148,7 @@ export DEBUG="-DNDEBUG"
 		--libexecdir=%{uclibc_root}%{_libdir} \
 		--sbindir=%{uclibc_root}/sbin \
 		--enable-gettext=yes \
+		--enable-static \
 		--enable-editline=no \
 		--enable-shared=yes \
 		--enable-readline=yes
@@ -166,6 +165,7 @@ export OPTIMIZER="%{optflags}"
 		--sbindir=/sbin \
 		--bindir=/usr/sbin \
 		--enable-gettext=yes \
+		--enable-static \
 		--enable-editline=no \
 		--enable-shared=yes \
 		--enable-readine=yes
@@ -200,7 +200,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %doc doc/CHANGES.gz doc/CREDITS README
 /sbin/xfs_admin
 /sbin/xfs_bmap
-/sbin/xfs_check
+# /sbin/xfs_check
 /sbin/xfs_copy
 /sbin/xfs_db
 /sbin/xfs_freeze
@@ -226,7 +226,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %files -n uclibc-%{name}
 %{uclibc_root}/sbin/xfs_admin
 %{uclibc_root}/sbin/xfs_bmap
-%{uclibc_root}/sbin/xfs_check
+# %{uclibc_root}/sbin/xfs_check
 %{uclibc_root}/sbin/xfs_copy
 %{uclibc_root}/sbin/xfs_db
 %{uclibc_root}/sbin/xfs_freeze

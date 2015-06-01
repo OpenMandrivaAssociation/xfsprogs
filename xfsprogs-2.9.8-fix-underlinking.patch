@@ -33,3 +33,43 @@ diff -p -up ./libxlog/Makefile.underlinking ./libxlog/Makefile
  
  CFILES = xfs_log_recover.c util.c
  
+--- xfsprogs-3.2.0/io/Makefile.omv~	2014-05-18 22:42:39.379359392 +0200
++++ xfsprogs-3.2.0/io/Makefile	2014-05-18 22:42:55.159478905 +0200
+@@ -13,8 +13,8 @@ CFILES = init.c \
+ 	mmap.c open.c parent.c pread.c prealloc.c pwrite.c seek.c shutdown.c \
+ 	sync.c truncate.c
+ 
+-LLDLIBS = $(LIBXCMD) $(LIBHANDLE)
+-LTDEPENDENCIES = $(LIBXCMD) $(LIBHANDLE)
++LLDLIBS = $(LIBXCMD) $(LIBHANDLE) -luuid
++LTDEPENDENCIES = $(LIBXCMD) $(LIBHANDLE) -luuid
+ LLDFLAGS = -static
+ 
+ ifeq ($(HAVE_FADVISE),yes)
+--- xfsprogs-3.2.0/libxfs/Makefile.omv~	2014-05-18 22:41:18.065414545 +0200
++++ xfsprogs-3.2.0/libxfs/Makefile	2014-05-18 22:41:41.375589069 +0200
+@@ -53,11 +53,11 @@ LSRCFILES += gen_crc32table.c
+ # -DXACT_DEBUG		transaction state changes
+ #
+ #LCFLAGS +=
+-LTLIBS = $(LIBPTHREAD) $(LIBRT)
++LTLIBS = $(LIBPTHREAD) $(LIBRT) -luuid
+ 
+ FCFLAGS = -I.
+ 
+-LTLIBS = $(LIBPTHREAD) $(LIBRT)
++LTLIBS = $(LIBPTHREAD) $(LIBRT) -luuid
+ 
+ # don't try linking xfs_repair with a debug libxfs.
+ DEBUG = -DNDEBUG
+--- xfsprogs-3.2.0/quota/Makefile.omv~	2014-05-18 22:43:19.222994974 +0200
++++ xfsprogs-3.2.0/quota/Makefile	2014-05-18 22:43:30.703082353 +0200
+@@ -14,7 +14,7 @@ CFILES += $(PKG_PLATFORM).c
+ PCFILES = darwin.c freebsd.c irix.c linux.c
+ LSRCFILES = $(shell echo $(PCFILES) | sed -e "s/$(PKG_PLATFORM).c//g")
+ 
+-LLDLIBS = $(LIBXCMD)
++LLDLIBS = $(LIBXCMD) -luuid
+ LTDEPENDENCIES = $(LIBXCMD)
+ LLDFLAGS = -static
+ 
