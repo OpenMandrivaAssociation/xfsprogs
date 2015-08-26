@@ -10,12 +10,12 @@
 %define	devname	%mklibname handle -d
 %define	statname %mklibname handle -d -s
 
-%bcond_without	uclibc
+%bcond_with	uclibc
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
 Version:	3.2.2
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
@@ -48,6 +48,7 @@ Refer to the documentation at http://oss.sgi.com/projects/xfs/
 for complete details.  This implementation is on-disk compatible
 with the IRIX version of XFS.
 
+%if %{with uclibc}
 %package -n	uclibc-%{name}
 Summary:	Utilities for managing the XFS filesystem (uClibc build)
 Group:		System/Kernel and hardware
@@ -66,6 +67,16 @@ Refer to the documentation at http://oss.sgi.com/projects/xfs/
 for complete details.  This implementation is on-disk compatible
 with the IRIX version of XFS.
 
+%package -n	uclibc-%{libname}
+Summary:	Main library for xfsprogs (uClibc build)
+Group:		System/Libraries
+License:	LGPLv2.1+
+
+%description -n	uclibc-%{libname}
+This package contains the library needed to run programs dynamically
+linked with libhandle.
+%endif
+
 %package -n	%{libname}
 Summary:	Main library for xfsprogs
 Group:		System/Libraries
@@ -76,23 +87,11 @@ License:	LGPLv2.1+
 This package contains the library needed to run programs dynamically
 linked with libhandle.
 
-%package -n	uclibc-%{libname}
-Summary:	Main library for xfsprogs (uClibc build)
-Group:		System/Libraries
-License:	LGPLv2.1+
-
-%description -n	uclibc-%{libname}
-This package contains the library needed to run programs dynamically
-linked with libhandle.
-
 %package -n	%{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
 License:	LGPLv2.1+
 Requires:	%{libname} = %{EVRD}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}
-%endif
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
 Requires:	libuuid-devel
 %rename		%{olddev}
@@ -160,7 +159,7 @@ popd
 export DEBUG="-DNDEBUG"
 export OPTIMIZER="%{optflags}"
 
-%configure2_5x	--libdir=/%{_lib} \
+%configure	--libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
 		--bindir=/usr/sbin \
