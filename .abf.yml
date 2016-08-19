@@ -1,5 +1,2 @@
-removed_sources:
-  xfsprogs-3.2.0.tar.gz: da6287c8f98ce2263e3b9dac6b127a2a9479c4f1
-  xfsprogs-3.2.1.tar.gz: 9926245f0dafc0f19fd698a065b5384d5e305926
 sources:
-  xfsprogs-3.2.2.tar.gz: a7f50a73fbac86b185767ed925ed2c7ab047edff
+  xfsprogs-4.7.0.tar.gz: 876b9c4d007d57d523c3b7cc9f602b8eda8b168e

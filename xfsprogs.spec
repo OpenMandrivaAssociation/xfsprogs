@@ -6,6 +6,8 @@
 %define	olddev	%mklibname xfs -d
 %define	oldstat	%mklibname xfs -d -s
 
+%define	xcmd	%mklibname xcmd  %{major}
+
 %define	libname	%mklibname handle %{major}
 %define	devname	%mklibname handle -d
 %define	statname %mklibname handle -d -s
@@ -14,20 +16,19 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	3.2.2
-Release:	3
+Version:	4.7.0
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	ftp://oss.sgi.com/projects/xfs/cmd_tars/%{name}-%{version}.tar.gz
-Patch1:		xfsprogs-2.9.8-fix-underlinking.patch
-Patch2:		xfsprogs-3.2.0-uclibc.patch
-Patch4:		xfsprogs-use-posix-signal-api.patch
+Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
 
 BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	pkgconfig(blkid)
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
@@ -169,7 +170,7 @@ export OPTIMIZER="%{optflags}"
 		--enable-shared=yes \
 		--enable-readine=yes
 
-make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
+%make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
 
 %install
 %if %{with uclibc}
