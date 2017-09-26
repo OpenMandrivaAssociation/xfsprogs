@@ -14,7 +14,7 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	4.11.0
+Version:	4.13.0
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -147,6 +147,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 /sbin/fsck.xfs
 /sbin/mkfs.xfs
 /sbin/xfs_repair
+/sbin/xfs_spaceman
 %{_mandir}/man[85]/*
 
 %files -n %{libname}
