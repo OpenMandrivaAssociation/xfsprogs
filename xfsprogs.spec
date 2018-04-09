@@ -14,7 +14,7 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	4.14.0
+Version:	4.15.1
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -147,8 +147,17 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 /sbin/fsck.xfs
 /sbin/mkfs.xfs
 /sbin/xfs_repair
+/sbin/xfs_scrub
+/sbin/xfs_scrub_all
 /sbin/xfs_spaceman
 %{_mandir}/man[85]/*
+/lib/systemd/system/xfs_scrub@.service
+/lib/systemd/system/xfs_scrub_all.service
+/lib/systemd/system/xfs_scrub_all.timer
+/lib/systemd/system/xfs_scrub_fail@.service
+%dir /%{_lib}/xfsprogs
+/%{_lib}/xfsprogs/xfs_scrub_all.cron
+/%{_lib}/xfsprogs/xfs_scrub_fail
 
 %files -n %{libname}
 /%{_lib}/libhandle.so.%{major}*
@@ -156,6 +165,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %files -n %{devname}
 %{_libdir}/libhandle.so
 %{_includedir}/xfs
+%{_mandir}/man2/*
 %{_mandir}/man3/*
 
 %files -n %{statname}
