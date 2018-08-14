@@ -27,6 +27,7 @@ BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(blkid)
+BuildRequires:	systemd-macros
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
 
