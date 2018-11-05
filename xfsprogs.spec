@@ -27,6 +27,7 @@ BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(blkid)
+BuildRequires:	pkgconfig(systemd)
 BuildRequires:	systemd-macros
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
@@ -99,7 +100,7 @@ autoconf
 export DEBUG="-DNDEBUG"
 export OPTIMIZER="%{optflags}"
 
-%configure	--libdir=/%{_lib} \
+%configure --libdir=/%{_lib} \
 		--libexecdir=%{_libdir} \
 		--sbindir=/sbin \
 		--bindir=/usr/sbin \
