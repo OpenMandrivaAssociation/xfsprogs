@@ -21,6 +21,7 @@ Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-%{version}.tar.xz
 Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
+Patch1:		xfsprogs-4.9.0-underlinking.patch
 
 BuildRequires:	libtool
 BuildRequires:	readline-devel
@@ -91,8 +92,7 @@ filesystem-specific programs, If you install %{statname}, you'll
 also want to install xfsprogs.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 aclocal -I m4
 autoconf
 
