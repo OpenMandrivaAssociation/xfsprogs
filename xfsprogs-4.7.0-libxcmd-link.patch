@@ -1,12 +1,12 @@
-diff -up xfsprogs-4.15.1/libxcmd/Makefile.0000~ xfsprogs-4.15.1/libxcmd/Makefile
---- xfsprogs-4.15.1/libxcmd/Makefile.0000~	2018-04-09 22:05:39.288047677 +0200
-+++ xfsprogs-4.15.1/libxcmd/Makefile	2018-04-09 22:06:15.180669974 +0200
-@@ -12,6 +12,8 @@ LT_AGE = 0
+diff -uraN xfsprogs-5.7.0/libxcmd/Makefile omv-xfsprogs-5.7.0/libxcmd/Makefile
+--- xfsprogs-5.7.0/libxcmd/Makefile	2020-05-28 23:29:08.000000000 +0200
++++ omv-xfsprogs-5.7.0/libxcmd/Makefile	2020-07-25 13:58:51.685709950 +0200
+@@ -14,6 +14,8 @@
  
  CFILES = command.c input.c help.c quit.c
  
 +LTLIBS = $(LIBXFS) $(LIBBLKID)
 +
- ifeq ($(ENABLE_READLINE),yes)
- LCFLAGS += -DENABLE_READLINE
- LTLIBS += $(LIBREADLINE) $(LIBTERMCAP)
+ ifeq ($(ENABLE_EDITLINE),yes)
+ LCFLAGS += -DENABLE_EDITLINE
+ LTLIBS += $(LIBEDITLINE) $(LIBTERMCAP)
