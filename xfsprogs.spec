@@ -64,7 +64,7 @@ Group:		Development/C
 License:	LGPLv2.1+
 Requires:	%{libname} = %{EVRD}
 # For uuid/uuid.h included in /usr/include/xfs/linux.h
-Requires:	libuuid-devel
+Requires:	pkgconfig(uuid)
 %rename		%{olddev}
 Provides:	%{name}-devel = %{EVRD}
 
