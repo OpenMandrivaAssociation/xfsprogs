@@ -26,6 +26,7 @@ Patch1:		xfsprogs-4.9.0-underlinking.patch
 BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
+BuildRequires:	pkgconfig(inih)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(systemd)
