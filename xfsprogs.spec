@@ -14,7 +14,7 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	5.13.0
+Version:	5.14.0
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -30,6 +30,7 @@ BuildRequires:	pkgconfig(inih)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	pkgconfig(liburcu)
 BuildRequires:	systemd-macros
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
