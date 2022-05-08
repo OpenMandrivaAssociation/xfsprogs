@@ -162,6 +162,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %dir /%{_lib}/xfsprogs
 /%{_lib}/xfsprogs/xfs_scrub_all.cron
 /%{_lib}/xfsprogs/xfs_scrub_fail
+%{_datadir}/xfsprogs/mkfs/
 
 %files -n %{libname}
 /%{_lib}/libhandle.so.%{major}*
