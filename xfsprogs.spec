@@ -1,21 +1,19 @@
 %define _disable_ld_no_undefined 1
 
-%define	major	1
+%define major 1
 
-%define	oldlib	%mklibname xfs %{major}
-%define	olddev	%mklibname xfs -d
-%define	oldstat	%mklibname xfs -d -s
-
-%define	xcmd	%mklibname xcmd  %{major}
-
-%define	libname	%mklibname handle %{major}
-%define	devname	%mklibname handle -d
-%define	statname %mklibname handle -d -s
+%define oldlib %mklibname xfs %{major}
+%define olddev %mklibname xfs -d
+%define oldstat %mklibname xfs -d -s
+%define xcmd %mklibname xcmd  %{major}
+%define libname %mklibname handle %{major}
+%define devname %mklibname handle -d
+%define statname %mklibname handle -d -s
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
 Version:	5.16.0
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
@@ -49,17 +47,17 @@ Refer to the documentation at http://oss.sgi.com/projects/xfs/
 for complete details.  This implementation is on-disk compatible
 with the IRIX version of XFS.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Main library for xfsprogs
 Group:		System/Libraries
 License:	LGPLv2.1+
 %rename		%{oldlib}
 
-%description -n	%{libname}
+%description -n %{libname}
 This package contains the library needed to run programs dynamically
 linked with libhandle.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	XFS filesystem-specific libraries and headers
 Group:		Development/C
 License:	LGPLv2.1+
@@ -69,7 +67,7 @@ Requires:	pkgconfig(uuid)
 %rename		%{olddev}
 Provides:	%{name}-devel = %{EVRD}
 
-%description -n	%{devname}
+%description -n %{devname}
 %{devname} contains the libraries and header files needed to
 develop XFS filesystem-specific programs.
 
@@ -77,7 +75,7 @@ You should install %{devname} if you want to develop XFS
 filesystem-specific programs, If you install %{devname}, you'll
 also want to install xfsprogs.
 
-%package -n	%{statname}
+%package -n %{statname}
 Summary:	XFS filesystem-specific static libraries
 Group:		Development/C
 License:	LGPLv2.1+
@@ -85,7 +83,7 @@ Requires:	%{devname} = %{version}
 %rename		%{oldstat}
 Provides:	%{name}-static-devel = %{EVRD}
 
-%description -n	%{statname}
+%description -n %{statname}
 %{devname} contains the static libraries needed to
 develop XFS filesystem-specific programs.
 
@@ -100,29 +98,20 @@ autoconf
 
 %build
 export DEBUG="-DNDEBUG"
-export OPTIMIZER="%{optflags}"
+export OPTIMIZER="%{optflags} -Oz"
 
-%configure --libdir=/%{_lib} \
-		--libexecdir=%{_libdir} \
-		--sbindir=/sbin \
-		--bindir=/usr/sbin \
-		--enable-gettext=yes \
-		--enable-static \
-		--enable-editline=no \
-		--enable-shared=yes \
-		--enable-readine=yes
+%configure \
+	--enable-gettext=yes \
+	--enable-static \
+	--enable-editline=no \
+	--enable-shared=yes \
+	--enable-readine=yes
 
-%make DEBUG=-DNDEBUG OPTIMIZER="%{optflags}"
+%make DEBUG=-DNDEBUG OPTIMIZER="%{optflags} -Oz"
 
 %install
-make install DIST_ROOT=%{buildroot}/
-make install-dev DIST_ROOT=%{buildroot}/
-
-install -d %{buildroot}%{_libdir}
-rm %{buildroot}/%{_lib}/libhandle.so
-ln -sr %{buildroot}/%{_lib}/libhandle.so.%{major}.* %{buildroot}%{_libdir}/libhandle.so
-mv %{buildroot}/%{_lib}/libhandle.a %{buildroot}%{_libdir}/libhandle.a
-chmod +x %{buildroot}/%{_lib}/libhandle.so.%{major}*
+make install DIST_ROOT=%{buildroot}/ PKG_ROOT_SBIN_DIR=%{_sbindir} PKG_ROOT_LIB_DIR=%{_libdir}
+make install-dev DIST_ROOT=%{buildroot}/ PKG_ROOT_LIB_DIR=%{_libdir}
 
 # nuke files already packaged as %doc
 rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
@@ -130,48 +119,25 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 
 %files -f %{name}.lang
 %doc doc/CREDITS README
-/sbin/xfs_admin
-/sbin/xfs_bmap
-# /sbin/xfs_check
-/sbin/xfs_copy
-/sbin/xfs_db
-/sbin/xfs_freeze
-/sbin/xfs_growfs
-/sbin/xfs_info
-/sbin/xfs_io
-/sbin/xfs_logprint
-/sbin/xfs_mkfile
-/sbin/xfs_ncheck
-/sbin/xfs_quota
-/sbin/xfs_rtcp
-/sbin/xfs_mdrestore
-/sbin/xfs_metadump
-/sbin/xfs_estimate
-/sbin/xfs_fsr
-/sbin/fsck.xfs
-/sbin/mkfs.xfs
-/sbin/xfs_repair
-/sbin/xfs_scrub
-/sbin/xfs_scrub_all
-/sbin/xfs_spaceman
-%{_mandir}/man[85]/*
-/lib/systemd/system/xfs_scrub@.service
-/lib/systemd/system/xfs_scrub_all.service
-/lib/systemd/system/xfs_scrub_all.timer
-/lib/systemd/system/xfs_scrub_fail@.service
-%dir /%{_lib}/xfsprogs
-/%{_lib}/xfsprogs/xfs_scrub_all.cron
-/%{_lib}/xfsprogs/xfs_scrub_fail
-%{_datadir}/xfsprogs/mkfs/
+%{_sbindir}/*
+%{_unitdir}/*.service
+%{_unitdir}/*.timer
+%dir %{_libdir}/xfsprogs
+%{_libdir}/xfsprogs/xfs_scrub_all.cron
+%{_libdir}/xfsprogs/xfs_scrub_fail
+%dir %{_datadir}/xfsprogs
+%dir %{_datadir}/xfsprogs/mkfs
+%{_datadir}/xfsprogs/mkfs/*.conf
+%doc %{_mandir}/man[85]/*
 
 %files -n %{libname}
-/%{_lib}/libhandle.so.%{major}*
+%{_libdir}/libhandle.so.%{major}*
 
 %files -n %{devname}
 %{_libdir}/libhandle.so
 %{_includedir}/xfs
-%{_mandir}/man2/*
-%{_mandir}/man3/*
+%doc %{_mandir}/man2/*
+%doc %{_mandir}/man3/*
 
 %files -n %{statname}
 %{_libdir}/libhandle.a
