@@ -12,7 +12,7 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	6.3.0
+Version:	6.4.0
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
