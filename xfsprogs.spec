@@ -5,21 +5,28 @@
 %define oldlib %mklibname xfs %{major}
 %define olddev %mklibname xfs -d
 %define oldstat %mklibname xfs -d -s
-%define xcmd %mklibname xcmd  %{major}
-%define libname %mklibname handle %{major}
+%define oldlibname %mklibname handle %{major}
+%define libname %mklibname handle
 %define devname %mklibname handle -d
 %define statname %mklibname handle -d -s
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
 Version:	6.5.0
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
 Source0:	https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-%{version}.tar.xz
 Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
 Patch1:		xfsprogs-4.9.0-underlinking.patch
+# FIXME this patch is _bad_, as it disables good xfs features by default.
+# This is done because as of 2.12-rc1, grub can't read xfs filesystems
+# with those new features enabled, resulting in boot failures from an
+# xfs / (or /boot) filesystem.
+# This patch should be removed once grub is fixed (or we move to some
+# other bootloader).
+Patch2:		xfsprogs-6.5.0-grub-compatibility.patch
 
 BuildRequires:	libtool
 BuildRequires:	readline-devel
@@ -52,6 +59,7 @@ Summary:	Main library for xfsprogs
 Group:		System/Libraries
 License:	LGPLv2.1+
 %rename		%{oldlib}
+%rename		%{oldlibname}
 
 %description -n %{libname}
 This package contains the library needed to run programs dynamically

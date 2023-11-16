@@ -1,0 +1,20 @@
+diff -up xfsprogs-6.5.0/mkfs/xfs_mkfs.c.omv~ xfsprogs-6.5.0/mkfs/xfs_mkfs.c
+--- xfsprogs-6.5.0/mkfs/xfs_mkfs.c.omv~	2023-11-16 15:16:43.027316404 +0100
++++ xfsprogs-6.5.0/mkfs/xfs_mkfs.c	2023-11-16 15:17:32.427742733 +0100
+@@ -4134,14 +4134,14 @@ main(
+ 			.dirftype = true,
+ 			.finobt = true,
+ 			.spinodes = true,
+-			.rmapbt = true,
++			.rmapbt = false,
+ 			.reflink = true,
+ 			.inobtcnt = true,
+ 			.parent_pointers = false,
+ 			.nodalign = false,
+ 			.nortalign = false,
+ 			.bigtime = true,
+-			.nrext64 = true,
++			.nrext64 = false,
+ 			/*
+ 			 * When we decide to enable a new feature by default,
+ 			 * please remember to update the mkfs conf files.
