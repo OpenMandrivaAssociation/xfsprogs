@@ -6,7 +6,7 @@ diff -up xfsprogs-6.5.0/mkfs/xfs_mkfs.c.omv~ xfsprogs-6.5.0/mkfs/xfs_mkfs.c
  			.finobt = true,
  			.spinodes = true,
 -			.rmapbt = true,
-+			.rmapbt = false,
++			.rmapbt = true,
  			.reflink = true,
  			.inobtcnt = true,
  			.parent_pointers = false,
