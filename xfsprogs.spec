@@ -36,6 +36,7 @@ BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	pkgconfig(liburcu)
+BuildRequires:	pkgconfig(udev)
 BuildRequires:	systemd-macros
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
@@ -137,6 +138,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %dir %{_datadir}/xfsprogs/mkfs
 %{_datadir}/xfsprogs/mkfs/*.conf
 %doc %{_mandir}/man[85]/*
+%{_prefix}/lib/udev/rules.d/64-xfs.rules
 
 %files -n %{libname}
 %{_libdir}/libhandle.so.%{major}*
