@@ -28,6 +28,7 @@ Patch1:		xfsprogs-4.9.0-underlinking.patch
 # other bootloader).
 Patch2:		xfsprogs-6.5.0-grub-compatibility.patch
 
+BuildRequires:	gettext
 BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
