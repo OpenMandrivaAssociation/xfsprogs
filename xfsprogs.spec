@@ -12,8 +12,8 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	6.5.0
-Release:	3
+Version:	6.6.0
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		http://oss.sgi.com/projects/xfs/
@@ -28,6 +28,7 @@ Patch1:		xfsprogs-4.9.0-underlinking.patch
 # other bootloader).
 Patch2:		xfsprogs-6.5.0-grub-compatibility.patch
 
+BuildRequires:	gettext
 BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ext2fs)
@@ -131,9 +132,8 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %{_sbindir}/*
 %{_unitdir}/*.service
 %{_unitdir}/*.timer
-%dir %{_libdir}/xfsprogs
-%{_libdir}/xfsprogs/xfs_scrub_all.cron
-%{_libdir}/xfsprogs/xfs_scrub_fail
+%{_datadir}/xfsprogs/xfs_scrub_all.cron
+%{_libexecdir}/xfsprogs/xfs_scrub_fail
 %dir %{_datadir}/xfsprogs
 %dir %{_datadir}/xfsprogs/mkfs
 %{_datadir}/xfsprogs/mkfs/*.conf
