@@ -12,11 +12,11 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	6.7.0
+Version:	6.8.0
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
-URL:		http://oss.sgi.com/projects/xfs/
+URL:		https://oss.sgi.com/projects/xfs/
 Source0:	https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-%{version}.tar.xz
 Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
 Patch1:		xfsprogs-4.9.0-underlinking.patch
