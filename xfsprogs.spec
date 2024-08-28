@@ -27,6 +27,7 @@ Patch1:		xfsprogs-4.9.0-underlinking.patch
 # This patch should be removed once grub is fixed (or we move to some
 # other bootloader).
 Patch2:		xfsprogs-6.5.0-grub-compatibility.patch
+Patch3:		xfsprogs-6.10.0-c++-void.patch
 
 BuildRequires:	gettext
 BuildRequires:	libtool
