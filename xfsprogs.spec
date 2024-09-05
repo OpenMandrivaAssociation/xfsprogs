@@ -38,6 +38,9 @@ BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	pkgconfig(liburcu)
 BuildRequires:	pkgconfig(udev)
+BuildRequires:	pkgconfig(libattr)
+BuildRequires:	pkgconfig(libacl)
+BuildRequires:	pkgconfig(icu-i18n)
 BuildRequires:	systemd-macros
 Requires:	common-licenses
 Conflicts:	xfsdump < 3.0.0
