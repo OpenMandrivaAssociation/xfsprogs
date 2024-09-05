@@ -12,7 +12,7 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	6.10.0
+Version:	6.10.1
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -139,6 +139,7 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %{_datadir}/xfsprogs/mkfs/*.conf
 %doc %{_mandir}/man[85]/*
 %{_prefix}/lib/udev/rules.d/64-xfs.rules
+%{_prefix}/lib/systemd/system/system-xfs_scrub.slice
 
 %files -n %{libname}
 %{_libdir}/libhandle.so.%{major}*
