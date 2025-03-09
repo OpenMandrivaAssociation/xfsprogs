@@ -106,6 +106,8 @@ also want to install xfsprogs.
 
 %prep
 %autosetup -p1
+# Relevant functionality moved in ICU 76
+sed -i -e 's,icu-i18n,& icu-uc,g' m4/package_icu.m4
 aclocal -I m4
 autoconf
 
