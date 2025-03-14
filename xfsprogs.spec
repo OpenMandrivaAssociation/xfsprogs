@@ -13,7 +13,7 @@
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
 Version:	6.13.0
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		https://oss.sgi.com/projects/xfs/
