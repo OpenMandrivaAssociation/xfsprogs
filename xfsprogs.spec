@@ -12,14 +12,14 @@
 
 Summary:	Utilities for managing the XFS filesystem
 Name:		xfsprogs
-Version:	6.18.0
-Release:	2
+Version:	7.1.1
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 URL:		https://oss.sgi.com/projects/xfs/
 Source0:	https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-%{version}.tar.xz
-Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
-Patch1:		xfsprogs-4.9.0-underlinking.patch
+# dropped (no longer applies): Patch0:		xfsprogs-4.7.0-libxcmd-link.patch
+# dropped (no longer applies): Patch1:		xfsprogs-4.9.0-underlinking.patch
 # FIXME this patch is _bad_, as it disables good xfs features by default.
 # This is done because as of 2.12-rc1, grub can't read xfs filesystems
 # with those new features enabled, resulting in boot failures from an
