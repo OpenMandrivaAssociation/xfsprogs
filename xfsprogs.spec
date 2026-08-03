@@ -142,8 +142,11 @@ rm -r %{buildroot}%{_datadir}/doc/xfsprogs/
 %{_sbindir}/*
 %{_unitdir}/*.service
 %{_unitdir}/*.timer
+%{_unitdir}/system-xfs_healer.slice
 %{_datadir}/xfsprogs/xfs_scrub_all.cron
 %{_libexecdir}/xfsprogs/xfs_scrub_fail
+%{_libexecdir}/xfsprogs/xfs_healer
+%{_libexecdir}/xfsprogs/xfs_healer_start
 %dir %{_datadir}/xfsprogs
 %dir %{_datadir}/xfsprogs/mkfs
 %{_datadir}/xfsprogs/mkfs/*.conf
